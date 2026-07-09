@@ -22,6 +22,18 @@ npm run build
 npm start
 ```
 
+## Deploy en Render (Web Service)
+
+| Campo | Valor |
+|---|---|
+| Build Command | `npm install --include=dev && npm run build` |
+| Start Command | `npm start` |
+
+Environment:
+- `NEXT_PUBLIC_API_URL=https://tu-backend.onrender.com/api` (obligatorio en build)
+- `NODE_ENV=production`
+- No setear `PORT` — Render lo inyecta; `next start` lo usa automáticamente
+
 ## Rutas
 
 ### Público
