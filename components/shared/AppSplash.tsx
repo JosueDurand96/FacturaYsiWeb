@@ -3,46 +3,46 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+/** Splash único: ícono centro + branding abajo. Fade suave, sin flash. */
 export function AppSplash() {
-  const [visible, setVisible] = useState(true);
-  const [fadeOut, setFadeOut] = useState(false);
+  const [phase, setPhase] = useState<"in" | "out" | "gone">("in");
 
   useEffect(() => {
-    const fadeTimer = window.setTimeout(() => setFadeOut(true), 1100);
-    const hideTimer = window.setTimeout(() => setVisible(false), 1700);
+    const out = window.setTimeout(() => setPhase("out"), 1200);
+    const gone = window.setTimeout(() => setPhase("gone"), 1750);
     return () => {
-      window.clearTimeout(fadeTimer);
-      window.clearTimeout(hideTimer);
+      window.clearTimeout(out);
+      window.clearTimeout(gone);
     };
   }, []);
 
-  if (!visible) return null;
+  if (phase === "gone") return null;
 
   return (
     <div
       aria-hidden
-      className={`fixed inset-0 z-[9999] bg-bg transition-opacity duration-500 ${
-        fadeOut ? "pointer-events-none opacity-0" : "opacity-100"
+      className={`fixed inset-0 z-[9999] bg-bg transition-opacity duration-500 ease-out ${
+        phase === "out" ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
       <div className="absolute inset-0 flex items-center justify-center">
         <Image
           src="/splash_mark.png"
           alt="FacturaYsi"
-          width={512}
-          height={512}
+          width={720}
+          height={720}
           priority
-          className="h-auto w-[42vw] max-w-[180px]"
+          className="h-auto w-[55vw] max-w-[220px]"
         />
       </div>
-      <div className="absolute inset-x-6 bottom-24 flex justify-center">
+      <div className="absolute inset-x-7 bottom-24 flex justify-center sm:bottom-28">
         <Image
           src="/splash_branding.png"
           alt="FacturaYsi — Emisión electrónica fácil"
-          width={900}
-          height={220}
+          width={1000}
+          height={260}
           priority
-          className="h-auto w-full max-w-sm"
+          className="h-auto w-full max-w-[320px]"
         />
       </div>
     </div>
