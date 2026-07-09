@@ -40,8 +40,22 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center p-6">
       <div className="w-full max-w-sm rounded-2xl border border-line bg-panel p-8">
         <Link href="/" className="mb-6 flex flex-col items-center text-center">
-          <Image src="/logo.png" alt="FacturaYsi" width={56} height={56} className="mb-3 rounded-xl" />
-          <h1 className="text-xl font-bold text-content">FacturaYsi</h1>
+          <Image
+            src="/splash_icon.png"
+            alt="FacturaYsi"
+            width={512}
+            height={512}
+            priority
+            className="mb-4 h-auto w-28"
+          />
+          <Image
+            src="/splash_branding.png"
+            alt="FacturaYsi — Emisión electrónica fácil"
+            width={900}
+            height={220}
+            priority
+            className="mb-2 h-auto w-full max-w-xs"
+          />
           <p className="text-sm text-muted">Emite en segundos, sin enredos</p>
         </Link>
         <form onSubmit={submit} className="space-y-4">
