@@ -9,6 +9,7 @@ import { useAuth } from "@/lib/auth";
 import type { UserT, EmpresaT } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -69,8 +70,7 @@ export default function LoginPage() {
           </div>
           <div>
             <Label>Contraseña</Label>
-            <Input
-              type="password"
+            <PasswordInput
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
