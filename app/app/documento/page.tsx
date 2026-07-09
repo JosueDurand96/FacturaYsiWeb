@@ -1,6 +1,7 @@
 "use client";
 
-import { useParams, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { CheckCircle2, FileText, Code, RefreshCw, Ban } from "lucide-react";
 import { api, unwrap } from "@/lib/api";
@@ -10,16 +11,16 @@ import { EstadoBadge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-export default function DocumentoDetallePage() {
-  const params = useParams();
-  const id = params.id as string;
+function DocumentoDetalleContent() {
   const search = useSearchParams();
+  const id = search.get("id") ?? "";
   const nuevo = search.get("nuevo") === "1";
   const qc = useQueryClient();
 
   const { data: doc, isLoading } = useQuery({
     queryKey: ["documento", id],
     queryFn: () => unwrap<DocumentoT>(api.get(`/documentos/${id}`)),
+    enabled: Boolean(id),
   });
 
   const consultar = useMutation({
@@ -30,6 +31,10 @@ export default function DocumentoDetallePage() {
     mutationFn: () => unwrap(api.post(`/documentos/${id}/anular`, { motivo: "ERROR EN LA EMISION" })),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["documento", id] }),
   });
+
+  if (!id) {
+    return <div className="p-6 text-muted">Documento no especificado.</div>;
+  }
 
   if (isLoading || !doc) {
     return <div className="p-6 text-muted">Cargando...</div>;
@@ -140,6 +145,14 @@ export default function DocumentoDetallePage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function DocumentoDetallePage() {
+  return (
+    <Suspense fallback={<div className="p-6 text-muted">Cargando...</div>}>
+      <DocumentoDetalleContent />
+    </Suspense>
   );
 }
 

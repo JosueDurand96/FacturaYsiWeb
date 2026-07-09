@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
-    "build": "next build",
-    "start": "next start",
+    "build": "next build && node scripts/copy-static-to-dist.js",
+    "start": "npx serve dist -p ${PORT:-3000}",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "render-build": "npm install --include=dev && npm run build",

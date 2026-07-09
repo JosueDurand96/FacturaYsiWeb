@@ -76,7 +76,7 @@ export default function AppDashboard() {
         {recientes.data?.data.map((d) => (
           <Link
             key={d._id}
-            href={`/app/documento/${d._id}`}
+            href={`/app/documento?id=${d._id}`}
             className="flex items-center gap-4 rounded-xl border border-line bg-panel px-4 py-3 hover:bg-elevated"
           >
             <div className="flex-1">

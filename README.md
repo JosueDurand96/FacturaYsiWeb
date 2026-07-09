@@ -18,21 +18,20 @@ npm run dev                    # http://localhost:3000
 
 ## Build
 ```bash
-npm run build
-npm start
+npm run build    # genera out/ y copia a dist/
+npx serve dist   # preview local del export estático
 ```
 
-## Deploy en Render (Web Service)
+## Deploy en Render (Static Site)
 
 | Campo | Valor |
 |---|---|
-| Build Command | `npm install --include=dev && npm run build` |
-| Start Command | `npm start` |
+| Build Command | `npm install && npm run build` |
+| **Publish Directory** | **`dist`** |
 
-Environment:
-- `NEXT_PUBLIC_API_URL=https://tu-backend.onrender.com/api` (obligatorio en build)
+Environment (build time):
+- `NEXT_PUBLIC_API_URL=https://tu-backend.onrender.com/api`
 - `NODE_ENV=production`
-- No setear `PORT` — Render lo inyecta; `next start` lo usa automáticamente
 
 ## Rutas
 
@@ -45,7 +44,7 @@ Environment:
 - `/app/dashboard` — 3 cards de emisión + recientes
 - `/app/emitir/gre` — formulario simplificado a 2 columnas (UBIGEO en cascada)
 - `/app/emitir/factura`, `/app/emitir/boleta`
-- `/app/historial`, `/app/documento/[id]`
+- `/app/historial`, `/app/documento?id=...`
 - `/app/frecuentes`, `/app/vehiculos`, `/app/conductores`, `/app/perfil`
 
 ## Acceso demo

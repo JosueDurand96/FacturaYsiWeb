@@ -68,7 +68,7 @@ export default function EmitirGrePage() {
     setLoading(true);
     try {
       const doc = await unwrap<DocumentoT>(api.post("/documentos/gre-remitente", payload));
-      router.push(`/app/documento/${doc._id}?nuevo=1`);
+      router.push(`/app/documento?id=${doc._id}&nuevo=1`);
     } catch (e) {
       setError((e as Error).message);
     } finally {

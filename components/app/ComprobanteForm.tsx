@@ -65,7 +65,7 @@ export function ComprobanteForm({ esFactura }: { esFactura: boolean }) {
     try {
       const path = esFactura ? "/documentos/factura" : "/documentos/boleta";
       const doc = await unwrap<DocumentoT>(api.post(path, payload));
-      router.push(`/app/documento/${doc._id}?nuevo=1`);
+      router.push(`/app/documento?id=${doc._id}&nuevo=1`);
     } catch (e) {
       setError((e as Error).message);
     } finally {

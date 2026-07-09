@@ -1,5 +1,4 @@
-// Render Build Command por defecto = solo `npm install`.
-// Instala devDependencies y compila cuando RENDER=true.
+// En Render Static Site, compila y copia out/ → dist/ cuando RENDER=true.
 const fs = require("fs");
 const path = require("path");
 const { execSync } = require("child_process");
@@ -9,23 +8,19 @@ if (process.env.RENDER !== "true") {
 }
 
 const root = path.join(__dirname, "..");
-const buildId = path.join(root, ".next", "BUILD_ID");
+const distIndex = path.join(root, "dist", "index.html");
 
-if (fs.existsSync(buildId)) {
-  console.log("[postinstall] .next/BUILD_ID ya existe, omitiendo build");
+if (fs.existsSync(distIndex)) {
+  console.log("[postinstall] dist/index.html ya existe, omitiendo build");
   process.exit(0);
 }
 
-console.log("[postinstall] Render → instalando devDependencies y compilando...");
-execSync("npm install --include=dev --ignore-scripts", {
-  stdio: "inherit",
-  cwd: root,
-});
+console.log("[postinstall] Render → compilando static export...");
 execSync("npm run build", { stdio: "inherit", cwd: root });
 
-if (!fs.existsSync(buildId)) {
-  console.error("[postinstall] ERROR: next build no generó .next/BUILD_ID");
+if (!fs.existsSync(distIndex)) {
+  console.error("[postinstall] ERROR: dist/index.html no se generó");
   process.exit(1);
 }
 
-console.log("[postinstall] Build OK");
+console.log("[postinstall] Static export OK → dist/");

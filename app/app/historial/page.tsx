@@ -85,7 +85,7 @@ export default function HistorialPage() {
               {rows.map((d) => (
                 <tr key={d._id} className="border-b border-line/40 hover:bg-elevated/50">
                   <td className="px-4 py-3">
-                    <Link href={`/app/documento/${d._id}`} className="font-medium text-content hover:text-brand-green">
+                    <Link href={`/app/documento?id=${d._id}`} className="font-medium text-content hover:text-brand-green">
                       {serieNumero(d.serie, d.numero)}
                     </Link>
                   </td>
