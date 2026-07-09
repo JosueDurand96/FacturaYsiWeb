@@ -21,26 +21,28 @@ export function AppSplash() {
   return (
     <div
       aria-hidden
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-bg transition-opacity duration-500 ${
+      className={`fixed inset-0 z-[9999] bg-bg transition-opacity duration-500 ${
         fadeOut ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
-      <div className="flex w-[min(360px,88vw)] flex-col items-center gap-7">
+      <div className="absolute inset-0 flex items-center justify-center">
         <Image
-          src="/splash_icon.png"
+          src="/splash_mark.png"
           alt="FacturaYsi"
           width={512}
           height={512}
           priority
-          className="h-auto w-[34vw] max-w-[140px]"
+          className="h-auto w-[42vw] max-w-[180px]"
         />
+      </div>
+      <div className="absolute inset-x-6 bottom-24 flex justify-center">
         <Image
           src="/splash_branding.png"
           alt="FacturaYsi — Emisión electrónica fácil"
           width={900}
           height={220}
           priority
-          className="h-auto w-full"
+          className="h-auto w-full max-w-sm"
         />
       </div>
     </div>

@@ -41,7 +41,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm rounded-2xl border border-line bg-panel p-8">
         <Link href="/" className="mb-6 flex flex-col items-center text-center">
           <Image
-            src="/splash_icon.png"
+            src="/splash_mark.png"
             alt="FacturaYsi"
             width={512}
             height={512}
