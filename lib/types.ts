@@ -14,6 +14,7 @@ export interface EmpresaT {
   nombreComercial: string;
   numeroRegistroMTC: string;
   serieGRERemitente: string;
+  serieGRETransportista: string;
   serieFactura: string;
   serieBoleta: string;
   docsEmitidosMes: number;

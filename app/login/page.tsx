@@ -14,8 +14,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 export default function LoginPage() {
   const router = useRouter();
   const setSession = useAuth((s) => s.setSession);
-  const [ruc, setRuc] = useState("20512345678");
-  const [usuario, setUsuario] = useState("julio@transportesjc.pe");
+  const [ruc, setRuc] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,7 +25,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const data = await unwrap<{ token: string; user: UserT; empresa: EmpresaT | null }>(
-        api.post("/auth/login", { ruc, usuario, password })
+        api.post("/auth/login", { ruc, password })
       );
       setSession(data.token, data.user, data.empresa);
       router.push("/app/dashboard");
@@ -62,11 +61,7 @@ export default function LoginPage() {
         <form onSubmit={submit} className="space-y-4">
           <div>
             <Label>RUC</Label>
-            <Input value={ruc} onChange={(e) => setRuc(e.target.value)} maxLength={11} />
-          </div>
-          <div>
-            <Label>Usuario</Label>
-            <Input value={usuario} onChange={(e) => setUsuario(e.target.value)} />
+            <Input value={ruc} onChange={(e) => setRuc(e.target.value)} maxLength={11} placeholder="11 dígitos" />
           </div>
           <div>
             <Label>Contraseña</Label>
