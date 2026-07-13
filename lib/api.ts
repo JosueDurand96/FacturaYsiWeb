@@ -42,3 +42,19 @@ export async function unwrapWithMeta<T>(
   if (body && body.success) return { data: body.data as T, meta: body.meta };
   throw new Error(body?.error ?? "Error desconocido");
 }
+
+export function isMockPdfUrl(url?: string | null): boolean {
+  return !url || url.includes("mock.facturaysi.pe");
+}
+
+export async function openDocumentoPdf(documentoId: string, enlacePdf?: string): Promise<void> {
+  if (enlacePdf && !isMockPdfUrl(enlacePdf)) {
+    window.open(enlacePdf, "_blank", "noopener,noreferrer");
+    return;
+  }
+
+  const res = await api.get(`/documentos/${documentoId}/pdf`, { responseType: "blob" });
+  const url = URL.createObjectURL(res.data);
+  window.open(url, "_blank", "noopener,noreferrer");
+  window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
+}

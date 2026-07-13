@@ -1,10 +1,10 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { CheckCircle2, FileText, Code, RefreshCw, Ban } from "lucide-react";
-import { api, unwrap } from "@/lib/api";
+import { api, unwrap, openDocumentoPdf } from "@/lib/api";
 import type { DocumentoT } from "@/lib/types";
 import { serieNumero, TIPO_LABEL, ESTADO_LABEL, formatMoney } from "@/lib/utils";
 import { EstadoBadge } from "@/components/ui/badge";
@@ -22,6 +22,8 @@ function DocumentoDetalleContent() {
     queryFn: () => unwrap<DocumentoT>(api.get(`/documentos/${id}`)),
     enabled: Boolean(id),
   });
+
+  const [pdfLoading, setPdfLoading] = useState(false);
 
   const consultar = useMutation({
     mutationFn: () => unwrap(api.get(`/documentos/${id}/consultar`)),
@@ -121,13 +123,21 @@ function DocumentoDetalleContent() {
       </div>
 
       <div className="mt-6 flex flex-wrap gap-3">
-        {doc.enlacePdf && (
-          <a href={doc.enlacePdf} target="_blank" rel="noreferrer">
-            <Button>
-              <FileText className="h-4 w-4" /> Ver PDF
-            </Button>
-          </a>
-        )}
+        <Button
+          disabled={pdfLoading}
+          onClick={async () => {
+            setPdfLoading(true);
+            try {
+              await openDocumentoPdf(id, doc.enlacePdf);
+            } catch (e) {
+              alert((e as Error).message);
+            } finally {
+              setPdfLoading(false);
+            }
+          }}
+        >
+          <FileText className="h-4 w-4" /> {pdfLoading ? "Abriendo..." : "Ver PDF"}
+        </Button>
         {doc.enlaceXml && (
           <a href={doc.enlaceXml} target="_blank" rel="noreferrer">
             <Button variant="outline">
